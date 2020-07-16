@@ -17,4 +17,9 @@ class UserInfo(models.Model):
         ('Student', 'Student')
     )
     type = models.CharField(max_length=11, choices=TYPES)
+    status = models.CharField(max_length=20, default='Pending')
 
+
+    employed_count = models.IntegerField(default=0)
+    unemployed_count = models.IntegerField(default=0)
+    student_count = models.IntegerField(default=0)

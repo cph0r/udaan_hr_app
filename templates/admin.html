@@ -1,0 +1,49 @@
+{% load render_table from django_tables2 %}
+{% load static %}
+<!doctype html>
+
+<html>
+<head>
+    <style>
+        table {
+            font-family: arial, sans-serif;
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        td, th {
+            border: 1px solid #dddddd;
+            text-align: left;
+            padding: 8px;
+        }
+
+        tr:nth-child(even) {
+            background-color: #dddddd;
+        }
+    </style>
+</head>
+<body>
+<table>
+{#    {% render_table query_results %}#}
+    <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>E-mail</th>
+        <th>Phone</th>
+        <th>Type</th>
+        <th>Status</th>
+    </tr>
+    {% for item in query_results %}
+    <tr>
+        <td>{{ item.user_id }}</td>
+        <td>{{ item.name }}</td>
+        <td>{{ item.email }}</td>
+        <td>{{ item.phone }}</td>
+        <td>{{ item.type }}</td>
+        <td>{{ item.status }}</td>
+    <td>{{ item.photo }}</td>
+    </tr>
+    {% endfor %}
+</table>
+</body>
+</html>

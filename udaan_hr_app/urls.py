@@ -22,9 +22,9 @@ from hr_app import views as hr_views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', hr_views.home, name='home'),
-    path('success',hr_views.success, name='success')
-
-    # path('user/', hr_views.admin, name='user'),
+    path('success',hr_views.success, name='success'),
+    path('user/', hr_views.administrator, name='administrator'),
+    path('pie-chart/', hr_views.pie_chart, name='pie-chart'),
     # path('request/<user_id>/', hr_views.request, name='request'),
 ]
 
