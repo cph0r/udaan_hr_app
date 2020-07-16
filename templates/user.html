@@ -1,0 +1,55 @@
+{% load widget_tweaks %}
+<!DOCTYPE html>
+<html>
+<body>
+
+<h2>User Request Form</h2>
+<form method = "POST" enctype="multipart/form-data">
+    {% csrf_token %}
+
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="form-group">
+                <label for="question">Enter Name</label>
+                {% render_field form.name class="form-control" rows="3" %}
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="form-group">
+                <label for="question">Enter E-mail</label>
+                {% render_field form.email class="form-control" rows="3" %}
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="form-group">
+                <label for="question">Enter Phone Number</label>
+                {% render_field form.phone class="form-control" rows="3" %}
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="form-group">
+                <label for="question">Add photo</label>
+                {% render_field form.photo class="form-control" rows="3" %}
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="form-group">
+                <label for="question">Current Status</label>
+                {% render_field form.type class="form-control" rows="3" %}
+            </div>
+        </div>
+    </div>
+    <button type='submit'> Submit</button>
+</form>
+
+</body>
+</html>
