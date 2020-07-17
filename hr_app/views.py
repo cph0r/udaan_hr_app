@@ -37,7 +37,12 @@ def success(request):
 
 
 def administrator(request):
-    query_results = UserInfo.objects.all()
+    user_filter = request.GET.get('filter')
+    query_results = None
+    if user_filter is None and user_filter == '':
+        query_results = UserInfo.objects.all()
+    else:
+        query_results = UserInfo.objects.filter(status=user_filter)
     context = {'query_result': query_results}
     return render(request, 'admin.html', locals())
 
@@ -55,20 +60,6 @@ def status_change(request):
             user.save()
 
     return HttpResponse('success')
-
-
-# def ajax_change_status(request):
-#     approve_request = request.GET.get('status', False)
-#     user_id = request.GET.get('user_id', False)
-#     # first you get your Job model
-#     user = UserInfo.objects.get(pk=user_id)
-#     try:
-#         user.status = approve_request
-#         user.save()
-#         return JsonResponse({"success": True})
-#     except Exception as e:
-#         return JsonResponse({"success": False})
-#     return JsonResponse(data)
 
 
 def pie_chart(request):
@@ -103,13 +94,12 @@ def pie_chart(request):
 
 
 def send_email(request):
-    send_mail(subject='Request Approval',
-              message='Your request has been approved',
-              from_email='chirag.phor2016@vitstudent.ac.in',
-              recipient_list=['dilok52717@pastmao.com'],
+    send_mail(subject="Request Approval",
+              message="Your request has been approved",
+              from_email="chirag.phor2016@vitstudent.ac.in",
+              recipient_list=['"' + request.GET.get('email') + '"'],
               fail_silently=False,
               )
-
     return HttpResponse('confirmation mail sent')
 
 
