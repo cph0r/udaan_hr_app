@@ -26,6 +26,8 @@ urlpatterns = [
     path('success',hr_views.success, name='success'),
     path('user/', hr_views.administrator, name='administrator'),
     path('pie-chart/', hr_views.pie_chart, name='pie-chart'),
+    path('user/send_email/', hr_views.send_mail, name='send_mail'),
+    path('status_change/',hr_views.status_change, name='status_change')
     # url(r'^ajax/change_status/$', hr_views.ajax_change_status, name='ajax_change_status')
     # path('request/<user_id>/', hr_views.request, name='request'),
 ]

@@ -132,3 +132,11 @@ MEDIA_URL = '/media/'
 INSTALLED_APPS, 'django_tables2'
 
 DJANGO_TABLES2_TEMPLATE = "django_tables2/bootstrap4.html"
+
+# EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT =587
+EMAIL_HOST_USER = 'chirag.phor2016@vitstudent.ac.in'
+EMAIL_HOST_PASSWORD = '!0Iltpvg0!'
+EMAIL_USE_TLS = True
+EMAIL_USE_SSL = False

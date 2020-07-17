@@ -6,6 +6,7 @@
 
 
 <head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
     <script src="http://code.jquery.com/jquery-3.4.1.min.js"></script>
     <style>
         table {
@@ -27,28 +28,39 @@
 </head>
 <body>
 <script>
-    $("#btn1").on('click', function () {
-        var user_id = $(this).val();
-        var status = 'approved'
+    function change_status(user_id, status){
         $.ajax({
-            url: '/ajax/validate_username/',
+            url: '/status_change/',
+            method: 'POST',
             data: {
                 'csrfmiddlewaretoken': $('input[name="csrfmiddlewaretoken"]').val(),
                 'status': status,
                 'user_id': user_id
             },
-            dataType: 'json',
+            dataType: 'text',
             success: function (data) {
-                if (data.success) {
-                    alert("ajax call success.");
+                if (data) {
+                    alert("Status Changed to "+ status);
+                    $('#'+user_id+'-status').text(status);
 
                 } else {
                     alert("ajax call not success.");
                 }
+            },
+            fail: function(xhr, textStatus, errorThrown){
+               alert('request failed');
             }
         });
 
-    });
+    }
+
+    function call_counter() {
+        $.get('/send_email/', function (data) {
+            alert("confirmation mail is sent!");
+        });
+    }
+
+
 </script>
 <table>
     {#    {% render_table query_results %}#}
@@ -68,11 +80,12 @@
             <td>{{ item.email }}</td>
             <td>{{ item.phone }}</td>
             <td>{{ item.type }}</td>
-            <td>{{ item.status }}</td>
+            <td id="{{ item.user_id }}-status">{{ item.status }}</td>
             <td>
-                <input type="submit" value="reject" name="status">
-                <input type="submit" value="accept" name="status">
-                <input type="hidden" name="user_id" value={{ item.id }}>
+                <input type="submit" value="reject" onclick=change_status({{ item.user_id }},'reject')>
+                <input type="submit" value="accept" onclick=change_status({{ item.user_id }},'approve')>
+                <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
+                <p id="mailStatus"></p>
                 {# <button id="btn1">approve</button>#}
                 {# <button id="btn2">Reject</button>#}
             </td>

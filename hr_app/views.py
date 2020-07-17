@@ -3,6 +3,7 @@ from django.http import HttpResponse, JsonResponse
 from .user_form import UserForms
 from .models import UserInfo
 from .forms import CreateUserInfo
+from django.core.mail import send_mail
 
 
 # Create your views here.
@@ -41,16 +42,19 @@ def administrator(request):
     return render(request, 'admin.html', locals())
 
 
-def admin_team_detail(request):
+def status_change(request):
     if request.method == 'POST':
         # First, you should retrieve the team instance you want to update
-        user = UserInfo.objects.get(user_id=request.POST('user_id'))
+        print(request.POST.get('user_id'))
+        print(request.POST.get('status'))
+        user = UserInfo.objects.get(user_id=request.POST.get('user_id'))
 
         # Next, you update the status
         if request.POST.get('status'):
-            print("LOL")
             user.status = request.POST.get('status')
             user.save()
+
+    return HttpResponse('success')
 
 
 # def ajax_change_status(request):
@@ -96,6 +100,17 @@ def pie_chart(request):
         'labels': labels,
         'data': data,
     })
+
+
+def send_email(request):
+    send_mail(subject='Request Approval',
+              message='Your request has been approved',
+              from_email='chirag.phor2016@vitstudent.ac.in',
+              recipient_list=['dilok52717@pastmao.com'],
+              fail_silently=False,
+              )
+
+    return HttpResponse('confirmation mail sent')
 
 
 def approve(request):
