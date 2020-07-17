@@ -14,22 +14,20 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.conf import settings
-from django.conf.urls import url
 from django.conf.urls.static import static
 from django.contrib import admin
-from django.urls import path, include
+from django.contrib.staticfiles.urls import staticfiles_urlpatterns
+from django.urls import path
 from hr_app import views as hr_views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', hr_views.home, name='home'),
-    path('success',hr_views.success, name='success'),
+    path('success', hr_views.success, name='success'),
     path('user/', hr_views.administrator, name='administrator'),
     path('pie-chart/', hr_views.pie_chart, name='pie-chart'),
     path('send_email/', hr_views.send_email, name='send_email'),
-    path('status_change/',hr_views.status_change, name='status_change')
-    # url(r'^ajax/change_status/$', hr_views.ajax_change_status, name='ajax_change_status')
-    # path('request/<user_id>/', hr_views.request, name='request'),
+    path('status_change/', hr_views.status_change, name='status_change')
 ]
 
 if settings.DEBUG:

@@ -1,31 +1,15 @@
 from django.shortcuts import render, redirect
-from django.http import HttpResponse, JsonResponse
-from .user_form import UserForms
+from django.http import HttpResponse
 from .models import UserInfo
 from .forms import CreateUserInfo
 from django.core.mail import send_mail
 
 
-# Create your views here.
 def home(request):
     if request.method == "POST":
         form = CreateUserInfo(request.POST, request.FILES)
-        data = UserInfo()
         if form.is_valid():
-
-            name = form.cleaned_data['name']
-            email = form.cleaned_data['email']
-            phone = form.cleaned_data['phone']
-            photo = form.cleaned_data['photo']
-            user_type = form.cleaned_data['type']
-
-            print(name, email, phone, user_type)
-            data.name = name
-            data.phone = phone
-            data.type = user_type
-            data.photo = photo
-            data.email = email
-            data.save()
+            form.save()
             return redirect('success')
 
     form = CreateUserInfo()
@@ -39,7 +23,7 @@ def success(request):
 def administrator(request):
     user_filter = request.GET.get('filter')
     query_results = None
-    if user_filter is None and user_filter == '':
+    if user_filter is None or user_filter == '':
         query_results = UserInfo.objects.all()
     else:
         query_results = UserInfo.objects.filter(status=user_filter)
@@ -49,12 +33,8 @@ def administrator(request):
 
 def status_change(request):
     if request.method == 'POST':
-        # First, you should retrieve the team instance you want to update
-        print(request.POST.get('user_id'))
-        print(request.POST.get('status'))
         user = UserInfo.objects.get(user_id=request.POST.get('user_id'))
 
-        # Next, you update the status
         if request.POST.get('status'):
             user.status = request.POST.get('status')
             user.save()
@@ -94,14 +74,11 @@ def pie_chart(request):
 
 
 def send_email(request):
+    recipient = request.GET.get("email")
     send_mail(subject="Request Approval",
               message="Your request has been approved",
               from_email="chirag.phor2016@vitstudent.ac.in",
-              recipient_list=['"' + request.GET.get('email') + '"'],
+              recipient_list=[recipient],
               fail_silently=False,
               )
     return HttpResponse('confirmation mail sent')
-
-
-def approve(request):
-    return HttpResponse('Approve')
