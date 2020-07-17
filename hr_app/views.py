@@ -59,7 +59,6 @@ def pie_chart(request):
         elif items.type == 'Unemployed':
             count3 += 1
 
-    UserInfo.unemployed_count
     labels.append('Employed')
     data.append(count2)
     labels.append('Unemployed')
