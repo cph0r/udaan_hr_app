@@ -3,7 +3,10 @@
 <!doctype html>
 
 <html>
+
+
 <head>
+    <script src="http://code.jquery.com/jquery-3.4.1.min.js"></script>
     <style>
         table {
             font-family: arial, sans-serif;
@@ -23,8 +26,32 @@
     </style>
 </head>
 <body>
+<script>
+    $("#btn1").on('click', function () {
+        var user_id = $(this).val();
+        var status = 'approved'
+        $.ajax({
+            url: '/ajax/validate_username/',
+            data: {
+                'csrfmiddlewaretoken': $('input[name="csrfmiddlewaretoken"]').val(),
+                'status': status,
+                'user_id': user_id
+            },
+            dataType: 'json',
+            success: function (data) {
+                if (data.success) {
+                    alert("ajax call success.");
+
+                } else {
+                    alert("ajax call not success.");
+                }
+            }
+        });
+
+    });
+</script>
 <table>
-{#    {% render_table query_results %}#}
+    {#    {% render_table query_results %}#}
     <tr>
         <th>ID</th>
         <th>Name</th>
@@ -32,18 +59,27 @@
         <th>Phone</th>
         <th>Type</th>
         <th>Status</th>
+        <th>Action</th>
     </tr>
     {% for item in query_results %}
-    <tr>
-        <td>{{ item.user_id }}</td>
-        <td>{{ item.name }}</td>
-        <td>{{ item.email }}</td>
-        <td>{{ item.phone }}</td>
-        <td>{{ item.type }}</td>
-        <td>{{ item.status }}</td>
-    <td>{{ item.photo }}</td>
-    </tr>
+        <tr>
+            <td>{{ item.user_id }}</td>
+            <td>{{ item.name }}</td>
+            <td>{{ item.email }}</td>
+            <td>{{ item.phone }}</td>
+            <td>{{ item.type }}</td>
+            <td>{{ item.status }}</td>
+            <td>
+                <input type="submit" value="reject" name="status">
+                <input type="submit" value="accept" name="status">
+                <input type="hidden" name="user_id" value={{ item.id }}>
+                {# <button id="btn1">approve</button>#}
+                {# <button id="btn2">Reject</button>#}
+            </td>
+        </tr>
     {% endfor %}
 </table>
 </body>
+
+
 </html>

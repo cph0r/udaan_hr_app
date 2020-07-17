@@ -14,6 +14,7 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.conf import settings
+from django.conf.urls import url
 from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import path, include
@@ -25,6 +26,7 @@ urlpatterns = [
     path('success',hr_views.success, name='success'),
     path('user/', hr_views.administrator, name='administrator'),
     path('pie-chart/', hr_views.pie_chart, name='pie-chart'),
+    # url(r'^ajax/change_status/$', hr_views.ajax_change_status, name='ajax_change_status')
     # path('request/<user_id>/', hr_views.request, name='request'),
 ]
 

@@ -40,6 +40,8 @@ INSTALLED_APPS = [
     'hr_app',
     'widget_tweaks',
     'django_tables2',
+    'django_filters',
+    'bootstrapform',
 ]
 
 MIDDLEWARE = [
@@ -128,3 +130,5 @@ MEDIA_ROOT =  os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
 
 INSTALLED_APPS, 'django_tables2'
+
+DJANGO_TABLES2_TEMPLATE = "django_tables2/bootstrap4.html"
