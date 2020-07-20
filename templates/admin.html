@@ -25,7 +25,6 @@
 <body>
 <script>
     function change_status(user_id, status, email) {
-
         $.ajax({
             url: '/status_change/',
             method: 'POST',
@@ -81,6 +80,7 @@
         <th>E-mail</th>
         <th>Phone</th>
         <th>Type</th>
+        <th>Photo</th>
         <th>Status</th>
         <th>Action</th>
     </tr>
@@ -91,6 +91,8 @@
             <td>{{ item.email }}</td>
             <td>{{ item.phone }}</td>
             <td>{{ item.type }}</td>
+            <td><a target="_blank" href="/media/{{ item.photo }}">View Image</a></td>
+
             <td id="{{ item.user_id }}-status">{{ item.status }}</td>
             <td>
                 <input type="submit" value="reject"
