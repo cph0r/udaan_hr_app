@@ -52,18 +52,18 @@ def pie_chart(request):
     count3 = 0
 
     for items in all_data:
-        if items.type == 'Student':
+        if items.status == 'approve':
             count1 += 1
-        elif items.type == 'Employed':
+        elif items.status == 'Pending':
             count2 += 1
-        elif items.type == 'Unemployed':
+        elif items.status == 'reject':
             count3 += 1
 
-    labels.append('Employed')
+    labels.append('Pending')
     data.append(count2)
-    labels.append('Unemployed')
+    labels.append('Rejected')
     data.append(count3)
-    labels.append('Student')
+    labels.append('Confirmed')
     data.append(count1)
 
     return render(request, 'pie_chart.html', {
