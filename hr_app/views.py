@@ -73,11 +73,19 @@ def pie_chart(request):
 
 
 def send_email(request):
-    recipient = request.GET.get("email")
-    send_mail(subject="Request Approval",
-              message="Your request has been approved",
-              from_email="chirag.phor2016@vitstudent.ac.in",
-              recipient_list=[recipient],
-              fail_silently=False,
-              )
-    return HttpResponse('confirmation mail sent')
+    if request.method == 'GET':
+        recipient = request.GET.get("email")
+        status = request.GET.get('status')
+        message = "Unable to get status"
+        if status == "approve":
+            message = "Your request has been approved"
+        elif status == "reject":
+            message = "Your request has been rejected"
+        send_mail(subject="Request Result",
+                  message=message,
+                  from_email="chirag.phor2016@vitstudent.ac.in",
+                  recipient_list=[recipient],
+                  fail_silently=False,
+                  )
+        return HttpResponse('confirmation mail sent')
+    return HttpResponse('confirmation mail was not sent')

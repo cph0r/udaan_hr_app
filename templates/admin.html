@@ -40,11 +40,11 @@
                 if (data) {
                     alert("Status Changed to " + status);
                     $('#' + user_id + '-status').text(status);
-                    if (status == "approve") {
-                        $.get('/send_email/', function (data) {
-                            alert("confirmation mail is sent!");
-                        });
-                    }
+
+                    $.get('/send_email/', {'email': email, 'status': status}, function (data) {
+                        alert("confirmation mail is sent to " + email);
+                    });
+
 
                 } else {
                     alert("ajax call not success.");
